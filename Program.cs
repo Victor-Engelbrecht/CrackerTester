@@ -1,4 +1,5 @@
 ﻿using System;
+//used for converting file into bytes and writing the password to text file 
 using System.IO;
 //used for http requests
 using System.Net.Http;
@@ -40,8 +41,96 @@ namespace CrackerTest
             t.Start();
             Console.ReadLine();
             */
-            OriginalCrack();
+            //OriginalCrack();
+            newCrack();
             //PostData();
+        }
+        /*
+         *                                  <Example>
+         *                  orignial        password
+         *                   changed        Password
+         *                   changed        pAssword
+         *                                  p@ssword
+         *                                  paSsword
+         *                                  pa5sword
+         *                                  pasSword...
+         *                  original        PAssword
+         *                                  P@ssword
+         *                                  PaSsword
+         *                                  Pa5sword
+         *                                  PasSword
+         *                                  Pas5word...
+         *                                  PAssword
+         *                                  P@ssword
+         *                                  pASsword
+         *                                  p@Ssword
+         *                                  pA5sword...
+         */
+        private static void newCrack()
+        {
+            string password = "password";
+            StringBuilder lowerCase = new StringBuilder();//"password"
+            StringBuilder upperCase = new StringBuilder("PASSWORD");
+            StringBuilder Symbols = new StringBuilder("@50");
+            int crawler = 0;
+            /*
+             * for loop for password
+             * for loop for how many characters to take
+             * when to skip characterss
+             * for loop to 
+             */
+            for (int i = 0; i < password.Length; i++)
+            {
+                lowerCase.Clear();
+                lowerCase.Append(password);
+                
+                Console.WriteLine("            First ");
+                for (int j = 0; j < password.Length; j++)
+                {
+                    int numberOfUpperCase = 1;
+                    //size of the crawler
+                    int crawlerLength = crawler;
+                    char replaceChar;
+                    //should the crawler be half the size of the strng use diffrent loops else noIndexError
+                    if (crawler < password.Length/2)
+                    {
+
+
+                        replaceChar = upperCase[crawlerLength];
+                        lowerCase[crawlerLength] = replaceChar;
+                        /*for (int c = crawler; c < password.Length; c++)
+                        {
+                            replaceChar = upperCase[crawlerLength];
+                            lowerCase[crawlerLength] = replaceChar;
+                            Console.WriteLine(lowerCase + " in if");
+                            crawlerLength++;
+                            for (int k = 0; k < crawlerLength; k++)
+                            {
+
+                            }
+                        }*/
+                        Console.WriteLine(lowerCase + " If one");
+                    }
+                    else if(crawler >=  Convert.ToDouble(password.Length / 2))
+                    {
+
+                        /*for (int c = crawler; c < password.Length; c++)
+                        {
+                            lowerCase[crawlerLength] = upperCase[crawlerLength];
+                            crawlerLength++;
+                            Console.WriteLine(lowerCase + " If two");
+                        }*/
+                        Console.WriteLine(lowerCase+ " if TWO");
+                       
+                    }
+                    crawler++;
+
+                }
+                crawler = crawler - password.Length;
+                Console.WriteLine(lowerCase);
+            }
+
+            Console.ReadLine();
         }
 
         private static void PostData()
@@ -68,7 +157,7 @@ namespace CrackerTest
 
             //for each is redundant how I wrote the progarm sill need to make some changes to it to make it consider symbols as well
 
-            //romove comment on foreach loop to see if looping is indeed redundant 
+            //remove comment on foreach loop to see if looping is indeed redundant 
             //foreach (char item in passwordText)
             {
                 //making more than one character crawl
@@ -116,8 +205,8 @@ namespace CrackerTest
                                 //uppercase--;
                             }
                             Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                        }
-                        */
+                        }*/
+
                         secondPrint[uppercase] = Convert.ToChar(currentAdding);
 
                         Console.WriteLine(secondPrint + "  Second");
@@ -129,6 +218,21 @@ namespace CrackerTest
                             //if the character does not have the same value as the previous loops itterator meaning all letters will become lowercase
                             //exccept the one that shares the value of that loop
                             currentAdding = printText[symbols].ToString().ToUpper();
+                            /*
+                            if (currentAdding == "A"|| currentAdding=="a")
+                            {
+                                if (uppercase - 1 < 0)
+                                {
+
+                                }
+                                else
+                                {
+                                    currentAdding = "@";
+                                    //uppercase--;
+                                }
+                                Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                            }
+                            */
                             thirdPrint[symbols] = Convert.ToChar(currentAdding);
                             Console.WriteLine(thirdPrint + "  Third");
                             if (symbols != uppercase)

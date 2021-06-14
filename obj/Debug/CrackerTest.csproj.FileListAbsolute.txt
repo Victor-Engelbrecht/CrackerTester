@@ -5,3 +5,6 @@ C:\Users\Victor\Desktop\C# class 2021\CrackerTest\obj\Debug\CrackerTest.csprojAs
 C:\Users\Victor\Desktop\C# class 2021\CrackerTest\obj\Debug\CrackerTest.csproj.CoreCompileInputs.cache
 C:\Users\Victor\Desktop\C# class 2021\CrackerTest\obj\Debug\CrackerTest.exe
 C:\Users\Victor\Desktop\C# class 2021\CrackerTest\obj\Debug\CrackerTest.pdb
+C:\Users\Victor\Desktop\C# class 2021\CrackerTest\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Victor\Desktop\C# class 2021\CrackerTest\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Victor\Desktop\C# class 2021\CrackerTest\obj\Debug\CrackerTest.csproj.CopyComplete
