@@ -1,0 +1,7 @@
+C:\Users\Victor\Desktop\C# class 2021\CrackerTest\bin\Debug\CrackerTest.exe.config
+C:\Users\Victor\Desktop\C# class 2021\CrackerTest\bin\Debug\CrackerTest.exe
+C:\Users\Victor\Desktop\C# class 2021\CrackerTest\bin\Debug\CrackerTest.pdb
+C:\Users\Victor\Desktop\C# class 2021\CrackerTest\obj\Debug\CrackerTest.csprojAssemblyReference.cache
+C:\Users\Victor\Desktop\C# class 2021\CrackerTest\obj\Debug\CrackerTest.csproj.CoreCompileInputs.cache
+C:\Users\Victor\Desktop\C# class 2021\CrackerTest\obj\Debug\CrackerTest.exe
+C:\Users\Victor\Desktop\C# class 2021\CrackerTest\obj\Debug\CrackerTest.pdb
