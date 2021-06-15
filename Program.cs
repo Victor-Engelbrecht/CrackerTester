@@ -42,9 +42,86 @@ namespace CrackerTest
             Console.ReadLine();
             */
             //OriginalCrack();
-            newCrack();
+            //newCrack();
+            retical();
             //PostData();
         }
+
+        private static void retical()
+        {
+            string password = "password";
+            StringBuilder lowerCase = new StringBuilder("password");//"password"
+            StringBuilder upperCase = new StringBuilder("PASSWORD");
+            StringBuilder symbols = new StringBuilder("@50");
+            StringBuilder print = new StringBuilder();
+            StringBuilder printTwo = new StringBuilder();
+            //crawler is used to define how many letters should be uppercase concurrently
+            int crawler = 0;
+            //replaceChar is used to inpunt the characters into the stringbuilders
+            char replaceChar;
+            /*
+             * for loop for password
+             * for loop for how many characters to take
+             * when to skip characterss
+             * for loop to 
+             */
+            for (int i = 0; i < password.Length; i++)
+            {
+                //resets the print string
+                print.Clear();
+                print.Append(password);
+
+                //size of the crawler
+                int crawlerLength = crawler;
+
+                Console.WriteLine("            First ");
+
+                //should the crawler be half the size of the strng use diffrent loops else IndexOutOfRangeException
+                if (crawler < password.Length / 2)
+                {
+                    for (int j = 0; j < i + 1; j++)
+                    {
+                        replaceChar = upperCase[crawlerLength];
+                        print[crawlerLength] = replaceChar;
+                        crawlerLength++;
+                    }
+
+
+
+                    Console.WriteLine(print + " If one");
+                    for (int m = 0; m < password.Length - i; m++)
+                    {
+                        printTwo = print;
+                        replaceChar = upperCase[m];
+                        printTwo[m] = replaceChar;
+                        Console.WriteLine("PrintTwo " + printTwo);
+                        replaceChar = lowerCase[m];
+                        printTwo[m] = replaceChar;
+                    }
+                }
+                else if (crawler >= Convert.ToDouble(password.Length / 2))
+                {
+                    crawlerLength = password.Length - crawlerLength;
+                    for (int j = 0; j != i + 1; j++)
+                    {
+                        replaceChar = upperCase[crawlerLength - 1];
+                        print[crawlerLength - 1] = replaceChar;
+                        crawlerLength++;
+                    }
+                    Console.WriteLine(print + " if TWO");
+
+                }
+
+
+
+                crawler++;
+                //crawler = crawler - password.Length;
+                Console.WriteLine(lowerCase);
+            }
+
+            Console.ReadLine();
+        }
+
         /*
          *                                  <Example>
          *                  orignial        password
@@ -65,7 +142,7 @@ namespace CrackerTest
          *                                  pASsword
          *                                  p@Ssword
          *                                  pA5sword...
-         */
+        */
         private static void newCrack()
         {
             string password = "password";
@@ -83,7 +160,7 @@ namespace CrackerTest
             {
                 lowerCase.Clear();
                 lowerCase.Append(password);
-                
+
                 Console.WriteLine("            First ");
                 for (int j = 0; j < password.Length; j++)
                 {
@@ -92,7 +169,7 @@ namespace CrackerTest
                     int crawlerLength = crawler;
                     char replaceChar;
                     //should the crawler be half the size of the strng use diffrent loops else noIndexError
-                    if (crawler < password.Length/2)
+                    if (crawler < password.Length / 2)
                     {
 
 
@@ -111,7 +188,7 @@ namespace CrackerTest
                         }*/
                         Console.WriteLine(lowerCase + " If one");
                     }
-                    else if(crawler >=  Convert.ToDouble(password.Length / 2))
+                    else if (crawler >= Convert.ToDouble(password.Length / 2))
                     {
 
                         /*for (int c = crawler; c < password.Length; c++)
@@ -120,8 +197,8 @@ namespace CrackerTest
                             crawlerLength++;
                             Console.WriteLine(lowerCase + " If two");
                         }*/
-                        Console.WriteLine(lowerCase+ " if TWO");
-                       
+                        Console.WriteLine(lowerCase + " if TWO");
+
                     }
                     crawler++;
 
