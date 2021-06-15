@@ -73,14 +73,18 @@ namespace CrackerTest
 
                 //size of the crawler
                 int crawlerLength = crawler;
+                int[] crawlerSkip = new int[password.Length];
 
                 Console.WriteLine("            First ");
 
                 //should the crawler be half the size of the strng use diffrent loops else IndexOutOfRangeException
                 if (crawler < password.Length / 2)
                 {
+                    //use crawlerskip to not replace the elements that are already in the array
+                    Array.Clear(crawlerSkip, 0, crawlerLength);
                     for (int j = 0; j < i + 1; j++)
                     {
+                        crawlerSkip[j] = crawlerLength;
                         replaceChar = upperCase[crawlerLength];
                         print[crawlerLength] = replaceChar;
                         crawlerLength++;
@@ -89,7 +93,7 @@ namespace CrackerTest
 
 
                     Console.WriteLine(print + " If one");
-                    for (int m = 0; m < password.Length - i; m++)
+                    /*for (int m = 0; m < password.Length - i; m++)
                     {
                         printTwo = print;
                         replaceChar = upperCase[m];
@@ -97,7 +101,7 @@ namespace CrackerTest
                         Console.WriteLine("PrintTwo " + printTwo);
                         replaceChar = lowerCase[m];
                         printTwo[m] = replaceChar;
-                    }
+                    }*/
                 }
                 else if (crawler >= Convert.ToDouble(password.Length / 2))
                 {
@@ -111,7 +115,6 @@ namespace CrackerTest
                     Console.WriteLine(print + " if TWO");
 
                 }
-
 
 
                 crawler++;
