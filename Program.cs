@@ -41,12 +41,104 @@ namespace CrackerTest
             t.Start();
             Console.ReadLine();
             */
+            jaggedArrayCrack();
             //OriginalCrack();
             //newCrack();
-            retical();
+            //retical();
             //PostData();
         }
 
+        //use a jagged array to loop through
+        //will have 3 diffrent possbile values
+        //0 password
+        //1 PASSWORD
+        //2 @50
+        private static void jaggedArrayCrack()
+        {
+            /*char[][] password = new char[3][];
+            password[0] = new char[] { 'p', 'a', 's', 's', 'w', 'o', 'r', 'd' };
+            password[1] = new char[] { 'P', 'A', 'S', 'S', 'W', 'O', 'R', 'D' };
+            password[2] = new char[] { '@', '5', '0' };*/
+
+
+            char[][] password = new char[8][];
+
+            password[0] = new char[] { 'p', 'P' };
+            password[1] = new char[] { 'a', 'A', '@' };
+            password[2] = new char[] { 's', 'S', '5' };
+            password[3] = new char[] { 's', 'S', '5' };
+            password[4] = new char[] { 'w', 'W' };
+            password[5] = new char[] { 'o', 'O', '0' };
+            password[6] = new char[] { 'r', 'R' };
+            password[7] = new char[] { 'd', 'D' };
+
+            /*int counter = 0;
+            for (int i = 0; i < password[0].Length; i++)
+            {
+                counter++;
+                for (int j = 0; j < password[1].Length; j++)
+                {
+                    counter++; 
+                    for (int l = 0; l < password[2].Length; l++)
+                    {
+                        counter++;
+                        
+                        Console.WriteLine(password[0][i]+""+password[1][j]+""+password[2][l]);
+                    }
+                }
+            }
+            Console.WriteLine(counter);
+            */
+            int test = 0;
+            StringBuilder print = new StringBuilder("password");
+            char replaceChar;
+            print.Length = password.Length;
+            foreach (char[] row in password)
+            {
+
+                foreach (char item in row)
+                {
+                    print.Clear();
+                    for (int i = 0; i < password.Length; i++)
+                    {
+                        print = new StringBuilder("password");
+                        replaceChar = item;
+                        print[test] = replaceChar;
+                        Console.WriteLine(print);
+                        int check = 0;
+
+                        for (int j = 0; j < password[i].Length; j++)
+                        {
+                            if (j == test)
+                            {
+
+                            }
+                            else if (true)
+                            {
+                                replaceChar = item;
+                                print[test] = replaceChar;
+                            }
+                            //test++;
+                            //print
+                        }
+
+
+                    }
+                    //test++;
+                    //Console.WriteLine(print);
+                    Console.WriteLine(item);
+                }
+                test++;
+                Console.WriteLine(" ");
+            }
+
+            Console.WriteLine(test);
+            Console.ReadLine();
+        }
+
+
+        // the most efficent method of finding the conclution just was not feasible to complete in a
+        // small enough time window
         private static void retical()
         {
             string password = "password";
@@ -91,13 +183,13 @@ namespace CrackerTest
                         replaceChar = upperCase[j];
                         print[j] = replaceChar;
                         crawlerLength++;
-                       // Console.WriteLine(crawlerSkip[j]);
+                        // Console.WriteLine(crawlerSkip[j]);
                     }
 
-
+                    //jagged array 
                     //this should work but prints value is overwritten for some reason I don't know
                     Console.WriteLine(print + " If one");
-                    /*for (int m = 0; m < password.Length - i; m++)
+                    for (int m = 0; m < password.Length - i; m++)
                     {
                         printTwo = print;
                         replaceChar = upperCase[m];
@@ -105,7 +197,7 @@ namespace CrackerTest
                         Console.WriteLine("PrintTwo " + printTwo);
                         replaceChar = lowerCase[m];
                         printTwo[m] = replaceChar;
-                    }*/
+                    }
                 }
                 else if (crawler >= Convert.ToDouble(password.Length / 2))
                 {
