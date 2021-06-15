@@ -73,6 +73,7 @@ namespace CrackerTest
 
                 //size of the crawler
                 int crawlerLength = crawler;
+                int crawlerForward = crawlerLength;
                 int[] crawlerSkip = new int[password.Length];
 
                 Console.WriteLine("            First ");
@@ -80,18 +81,21 @@ namespace CrackerTest
                 //should the crawler be half the size of the strng use diffrent loops else IndexOutOfRangeException
                 if (crawler < password.Length / 2)
                 {
+
                     //use crawlerskip to not replace the elements that are already in the array
                     Array.Clear(crawlerSkip, 0, crawlerLength);
                     for (int j = 0; j < i + 1; j++)
                     {
+                        //use crawler length to make them shift replaced with j for function
                         crawlerSkip[j] = crawlerLength;
-                        replaceChar = upperCase[crawlerLength];
-                        print[crawlerLength] = replaceChar;
+                        replaceChar = upperCase[j];
+                        print[j] = replaceChar;
                         crawlerLength++;
+                       // Console.WriteLine(crawlerSkip[j]);
                     }
 
 
-
+                    //this should work but prints value is overwritten for some reason I don't know
                     Console.WriteLine(print + " If one");
                     /*for (int m = 0; m < password.Length - i; m++)
                     {
