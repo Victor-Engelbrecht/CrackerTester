@@ -39,13 +39,191 @@ namespace CrackerTest
             /*
             Task t = new Task(GetRequest);
             t.Start();
-            Console.ReadLine();
+            Consol
+            e.ReadLine();
             */
-            jaggedArrayCrack();
+            loopToEnd();
+            //bruteForce();
+            //jaggedArrayCrack();
             //OriginalCrack();
             //newCrack();
             //retical();
             //PostData();
+        }
+
+        //simplest way of doing the password loop but there has to be a better way than this 
+        //too manual not proper method never use 
+        //kept as reminder of what not to do remove before final upload
+        private static void loopToEnd()
+        {
+            string password = "password";
+            StringBuilder testPass = new StringBuilder(password);
+            char[] charArray =  password.ToCharArray() ;
+            
+            //string password="";
+            for (int p = 0; p < 2; p++)
+            {
+                //testPass = new StringBuilder(password);
+
+                if (p == 0)
+                {
+                    // Console.WriteLine(password.Replace("p", "P"));
+                    testPass[0] = 'p';
+                }
+                if (p == 1)
+                {
+                   // Console.WriteLine(password.Replace("p", "P"));
+                    testPass[0] = 'P';
+                }
+                Console.WriteLine("##########" + testPass);
+                for (int a = 0; a < 3; a++)
+                {
+                    //testPass = new StringBuilder(password);
+
+                    if (a == 0)
+                    {
+                        //Console.WriteLine(password.Replace("a", "A"));
+                        testPass[1] = 'a';
+                    }
+                    if (a == 1)
+                    {
+                        //Console.WriteLine(password.Replace("a", "A"));
+                        testPass[1] = 'A';
+                    }
+                    else if (a == 2)
+                    {
+                        //Console.WriteLine(password.Replace("A", "@"));
+                        testPass[1] = '@';
+                    }
+                    Console.WriteLine("##########" + testPass);
+                    for (int s = 0; s < 3; s++)
+                    {
+                        //testPass = new StringBuilder(password);
+
+                        if (s == 0)
+                        {
+                            // Console.WriteLine(password.Replace("s", "S"));
+                            testPass[2] = 's';
+                        }
+                        if (s == 1)
+                        {
+                           // Console.WriteLine(password.Replace("s", "S"));
+                            testPass[2] = 'S';
+                        }
+                        else if (s == 2)
+                        {
+                            //Console.WriteLine(password.Replace("S", "5"));
+                            testPass[2] = '5';
+                        }
+                        Console.WriteLine("##########" + testPass);
+                        for (int s2 = 0; s2 < 3; s2++)
+                        {
+                            //testPass = new StringBuilder(password);
+
+                            if (s2 == 0)
+                            {
+                                // Console.WriteLine(password.Replace("s", "S"));
+                                testPass[3] = 's';
+                            }
+                            if (s2 == 1)
+                            {
+                               // Console.WriteLine(password.Replace("s", "S"));
+                                testPass[3] = 'S';
+                            }
+                            else if (s2 == 2)
+                            {
+                                //Console.WriteLine(password.Replace("S", "5"));
+                                testPass[3] = '5';
+                            }
+                            Console.WriteLine("##########" + testPass);
+                            for (int w = 0; w < 2; w++)
+                            {
+                                //testPass = new StringBuilder(password);
+
+                                if (w == 0)
+                                {
+                                    // Console.WriteLine(password.Replace("w", "W"));
+                                    testPass[4] = 'w';
+                                }
+                                if (w == 1)
+                                {
+                                   // Console.WriteLine(password.Replace("w", "W"));
+                                    testPass[4] = 'W';
+                                }
+                                Console.WriteLine("##########" + testPass);
+                                for (int o = 0; o < 3; o++)
+                                {
+                                    //testPass = new StringBuilder(password);
+
+                                    if (o == 0)
+                                    {
+                                        // Console.WriteLine(password.Replace("o", "O"));
+                                        testPass[5] = 'o';
+                                    }
+                                    if (o == 1)
+                                    {
+                                       // Console.WriteLine(password.Replace("o", "O"));
+                                        testPass[5] = 'O';
+                                    }
+                                    else if (o == 2)
+                                    {
+                                       // Console.WriteLine(password.Replace("O", "0"));
+                                        testPass[5] = '0';
+                                    }
+                                    Console.WriteLine("##########" + testPass);
+                                    for (int r = 0; r < 2; r++)
+                                    {
+                                        //testPass = new StringBuilder(password);
+                                        
+                                        if (r == 0)
+                                        {
+                                            //Console.WriteLine(password.Replace("r", "R"));
+                                            testPass[6] = 'r';
+                                        }
+                                        if (r == 1)
+                                        {
+                                            //Console.WriteLine(password.Replace("r", "R"));
+                                            testPass[6] = 'R';
+                                        }
+                                        Console.WriteLine("##########" + testPass);
+                                        for (int d = 0; d < 2; d++)
+                                        {
+                                            //testPass = new StringBuilder(password);
+                                            
+                                            if (d == 0)
+                                            {
+                                                //Console.WriteLine(password.Replace("d", "D"));
+                                                testPass[7] = 'd';
+                                                //Console.WriteLine(testPass + "          *******************************");
+                                            }
+                                            if (d == 1)
+                                            {
+                                                //Console.WriteLine(password.Replace("d", "D"));
+                                                testPass[7] = 'D';
+                                                //Console.WriteLine(testPass+ "          *******************************");
+                                            }
+                                            Console.WriteLine("##########"+ testPass);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //Console.WriteLine(password);
+            }
+            Console.WriteLine("\n END: "+testPass);
+            Console.ReadLine();
+        }
+
+        // too many possible combinations and thus would not work
+        private static void bruteForce()
+        {
+            char[] characters= new char[] { 'p', 'a', 's', 'w', 'o', 'r', 'd', 'P', 'A', 'S', 'W', 'O', 'R', 'D', '@', '5', '0' };
+            foreach (char character in characters)
+            {
+
+            }
         }
 
         //use a jagged array to loop through
@@ -105,18 +283,20 @@ namespace CrackerTest
                         replaceChar = item;
                         print[test] = replaceChar;
                         Console.WriteLine(print);
-                        int check = 0;
 
                         for (int j = 0; j < password[i].Length; j++)
                         {
+
+                           //replaceChar = password[j][];
+                            print[test] = replaceChar;
+                            Console.WriteLine("boo Print: "+print);
                             if (j == test)
                             {
 
                             }
-                            else if (true)
+                            else if (j != test)
                             {
-                                replaceChar = item;
-                                print[test] = replaceChar;
+                                //replaceChar = password[j][]
                             }
                             //test++;
                             //print
