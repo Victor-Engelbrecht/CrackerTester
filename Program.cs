@@ -1,4 +1,6 @@
-﻿using System;
+﻿//newtosoft is used for json objects
+using Newtonsoft.Json;
+using System;
 //used for converting file into bytes and writing the password to text file 
 using System.IO;
 //used for http requests
@@ -8,73 +10,66 @@ using System.Text;
 
 namespace CrackerTest
 {
+
+    //the object that will be serialised and sent to the url with the base64FileString being the zip file requested
     class JsonClass
     {
-        public string base64FileString;
+        //name and contact details
+        public string name { get; set; } = "Victor Engelbrecht";
+        public string email { get; set; } = "engelbrechtvictor99@gmail.com";
+        public string cell { get; set; } = "0624218299";
+        //zip file containing all work;
+        public string base64FileString { get; set; }
     }
+
     class Program
     {
         static void Main(string[] args)
         {
 
             //used for the get request
-
-            /*Task t = new Task(GetRequest);
-            t.Start();*/
-            //test();
-            GetRequest();
-            Console.ReadLine();
+            test();
+            //TestPasswordCombinations();
+            //Console.ReadLine();
 
 
-            //loopToEnd();
+            //FindPasswordLoopToEnd();
+            //PostZipFile();
 
-            //PostData();
 
-            bruteForce();
-            jaggedArrayCrack();
+            //Previous methods I was thinking of using to find all the diffrent cobinations of password
+            //They were not used for various reasons but I have left them in as a way to show my style of coding
+            //as well as how I go about solving the problem presented to me
+            //BruteForce();
+            //JaggedArrayCrack();
             //OriginalCrack();
-            //newCrack();
-            //retical();
-
+            //NewCrack();
+            //LastNewCrack();
         }
 
         private static void test()
         {
+            string filePathToZip = @"C:\\Users\\Victor\\Desktop\\ZipTest.zip";
+            byte[] fileData = File.ReadAllBytes(filePathToZip);
 
-            string url = "http://recruitment.warpdevelopment.co.za/api/authenticate";
-
-            //creats a new client to send and recieve data
-            HttpClient client = new HttpClient();
+            string test1 = Convert.ToBase64String(fileData);
 
 
-            string fileDirectoryFind = Path.GetFullPath(@"C:\\Users\\Victor\\Desktop");
-            string filename = "dict.txt";
-            string filePath = Path.Combine(fileDirectoryFind, filename);
-            int statusCode = 0;
-
-            StreamReader sr = new StreamReader(filePath);
-            string currentPass;
-            while ((currentPass = sr.ReadLine()) != null && statusCode != 200)
-            {
-                try
-                {
-                    //sets the variable that will be used for username and password
-                    // string password = (not set yet will do so in final version)
-                    var byteArray = Encoding.ASCII.GetBytes("john:" + currentPass);
-                    //Console.WriteLine(currentPass);
-                    //Console.WriteLine(Convert.ToBase64String(byteArray));
-                    // Console.WriteLine( "http://recruitment.warpdevelopment.co.za/api/authenticate/john/" + currentPass);
-                    Console.WriteLine(client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray)));
-                }
-                catch { }
-            }
+            //Console.WriteLine(Path.GetFullPath("CrackerTest\\Resources"));
+            Console.WriteLine(Convert.ToBase64String(fileData));
+            byte[] chavonneTest = Convert.FromBase64String(test1);
+            File.WriteAllBytes(@"C:\\Users\\Victor\\Desktop\\Chavonne.zip",  chavonneTest);
+            //File.WriteAllBytes("C:\\Users\\Victor\\Desktop\\PasswordCracker\\test.zip", fileData);
+            Console.ReadLine();
         }
 
-        //simplest way of doing the password loop but there has to be a better way than this 
-        //too manual not proper method never use 
-        //
-        private static void loopToEnd()
+        //simplest way of finding the password 
+        private static void FindPasswordLoopToEnd()
         {
+            //The directory location where the file is to be stored.
+            //Paths are hardcoded due to an access error on my pc
+
+            //sets the directory where the file is to be placed as well as the name the file wil have
             string fileDirectoryFind = Path.GetFullPath(@"C:\\Users\\Victor\\Desktop");
             string filename = "dict.txt";
             string filePath = Path.Combine(fileDirectoryFind, filename);
@@ -83,162 +78,132 @@ namespace CrackerTest
 
             StreamWriter sw = new StreamWriter(filePath);
 
+            //uncomment the "Console.WriteLine(testPass);" line to see how the method goes about generating the password combinations
             for (int p = 0; p < 2; p++)
             {
-                //testPass = new StringBuilder(password);
-
                 if (p == 0)
                 {
-                    // Console.WriteLine(password.Replace("p", "P"));
                     testPass[0] = 'p';
                 }
                 else if (p == 1)
                 {
-                    // Console.WriteLine(password.Replace("p", "P"));
                     testPass[0] = 'P';
                 }
-                Console.WriteLine("##########" + testPass);
+                //Console.WriteLine(testPass);
                 sw.WriteLine(testPass);
 
                 for (int a = 0; a < 3; a++)
                 {
-                    //testPass = new StringBuilder(password);
 
                     if (a == 0)
                     {
-                        //Console.WriteLine(password.Replace("a", "A"));
                         testPass[1] = 'a';
                     }
                     else if (a == 1)
                     {
-                        //Console.WriteLine(password.Replace("a", "A"));
                         testPass[1] = 'A';
                     }
                     else if (a == 2)
                     {
-                        //Console.WriteLine(password.Replace("A", "@"));
                         testPass[1] = '@';
                     }
-                    Console.WriteLine("##########" + testPass);
+                    //Console.WriteLine(testPass);
                     sw.WriteLine(testPass);
 
                     for (int s = 0; s < 3; s++)
                     {
-                        //testPass = new StringBuilder(password);
 
                         if (s == 0)
                         {
-                            // Console.WriteLine(password.Replace("s", "S"));
                             testPass[2] = 's';
                         }
                         else if (s == 1)
                         {
-                            // Console.WriteLine(password.Replace("s", "S"));
                             testPass[2] = 'S';
                         }
                         else if (s == 2)
                         {
-                            //Console.WriteLine(password.Replace("S", "5"));
                             testPass[2] = '5';
                         }
-                        Console.WriteLine("##########" + testPass);
+                        //Console.WriteLine(testPass);
                         sw.WriteLine(testPass);
 
                         for (int s2 = 0; s2 < 3; s2++)
                         {
-                            //testPass = new StringBuilder(password);
 
                             if (s2 == 0)
                             {
-                                // Console.WriteLine(password.Replace("s", "S"));
                                 testPass[3] = 's';
                             }
                             else if (s2 == 1)
                             {
-                                // Console.WriteLine(password.Replace("s", "S"));
                                 testPass[3] = 'S';
                             }
                             else if (s2 == 2)
                             {
-                                //Console.WriteLine(password.Replace("S", "5"));
                                 testPass[3] = '5';
                             }
-                            Console.WriteLine("##########" + testPass);
+                            //Console.WriteLine(testPass);
                             sw.WriteLine(testPass);
 
                             for (int w = 0; w < 2; w++)
                             {
-                                //testPass = new StringBuilder(password);
 
                                 if (w == 0)
                                 {
-                                    // Console.WriteLine(password.Replace("w", "W"));
                                     testPass[4] = 'w';
                                 }
                                 else if (w == 1)
                                 {
-                                    // Console.WriteLine(password.Replace("w", "W"));
                                     testPass[4] = 'W';
                                 }
-                                Console.WriteLine("##########" + testPass);
+                                //Console.WriteLine(testPass);
                                 sw.WriteLine(testPass);
 
                                 for (int o = 0; o < 3; o++)
                                 {
-                                    //testPass = new StringBuilder(password);
 
                                     if (o == 0)
                                     {
-                                        // Console.WriteLine(password.Replace("o", "O"));
                                         testPass[5] = 'o';
                                     }
                                     else if (o == 1)
                                     {
-                                        // Console.WriteLine(password.Replace("o", "O"));
                                         testPass[5] = 'O';
                                     }
                                     else if (o == 2)
                                     {
-                                        // Console.WriteLine(password.Replace("O", "0"));
                                         testPass[5] = '0';
                                     }
-                                    Console.WriteLine("##########" + testPass);
+                                    //Console.WriteLine(testPass);
                                     sw.WriteLine(testPass);
 
                                     for (int r = 0; r < 2; r++)
                                     {
-                                        //testPass = new StringBuilder(password);
 
                                         if (r == 0)
                                         {
-                                            //Console.WriteLine(password.Replace("r", "R"));
                                             testPass[6] = 'r';
                                         }
                                         else if (r == 1)
                                         {
-                                            //Console.WriteLine(password.Replace("r", "R"));
                                             testPass[6] = 'R';
                                         }
-                                        Console.WriteLine("##########" + testPass);
+                                        //Console.WriteLine(testPass);
                                         sw.WriteLine(testPass);
 
                                         for (int d = 0; d < 2; d++)
                                         {
-                                            //testPass = new StringBuilder(password);
 
                                             if (d == 0)
                                             {
-                                                //Console.WriteLine(password.Replace("d", "D"));
                                                 testPass[7] = 'd';
-                                                //Console.WriteLine(testPass + "          *******************************");
                                             }
                                             else if (d == 1)
                                             {
-                                                //Console.WriteLine(password.Replace("d", "D"));
                                                 testPass[7] = 'D';
-                                                //Console.WriteLine(testPass+ "          *******************************");
                                             }
-                                            Console.WriteLine("##########" + testPass);
+                                            //Console.WriteLine(testPass);
                                             sw.WriteLine(testPass);
                                         }
                                     }
@@ -247,8 +212,9 @@ namespace CrackerTest
                         }
                     }
                 }
-                //Console.WriteLine(password);
             }
+            //makes sure that everything in the writer is written and gives the last password found
+            //also ouputs the directory where the new file is located 
             sw.Flush();
             sw.Close();
             Console.WriteLine("\n END: " + testPass);
@@ -258,53 +224,63 @@ namespace CrackerTest
 
 
 
-        private static void PostData(string password, string url)
+        private async static void PostZipFile(string password, string url)
         {
-            //code added later for making connection to the website and posting data to it instead of requesting data
-            //this will be called in a looop untill the statuscode indicates success
-            //sets the url that the progarm will request data from
+            //makes a json obejct and posts it to the url passed to it it using the password provided 
+            try
+            {
+                //using hardcoded strings becuase my of access errors on computer
+                //all filepaths can be changed to the desired outputs
+                //gets the file and coverts it into bytes
+                string filePathToZip = @"C:\\Users\\Victor\\Desktop\\ZipTest.zip";
+                byte[] fileData = File.ReadAllBytes(filePathToZip);
+                //converts the file from bytes to a base65sting
+                string fileAsBase64String = Convert.ToBase64String(fileData);
 
+                //creats a new object to store the file and stores the file inside
+                JsonClass candidate = new JsonClass();
+                candidate.base64FileString = fileAsBase64String;
 
-            //string url = "http://recruitment.warpdevelopment.co.za/api/authenticate";
+                //serialiseds the object
+                var json = JsonConvert.SerializeObject(candidate);
+                //sets the type of file the post will contain as well as it's encoding and what data it contains
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            //creats a new client to send and recieve data
-            HttpClient client = new HttpClient();
-            //try and catch for any unexpected errors that might occur
+                //creats a new client to send and recieve data
+                HttpClient client = new HttpClient();
 
+                //uses the password provided to the method and makes a new AuthenticationHeader to be able to be able to interact with the website
+                var byteArray = Encoding.ASCII.GetBytes("john:" + password);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
-            string fileDirectoryFind = Path.GetFullPath(@"C:\\Users\\Victor\\Desktop");
-            string filename = "dict.txt";
-            string filePath = Path.Combine(fileDirectoryFind, filename);
-            int statusCode = 0;
+                //sends the data to the website
+                HttpResponseMessage responseMessage = await client.PostAsync(url, data);
 
-            StreamReader sr = new StreamReader(filePath);
-
-            //sets the variable that will be used for username and password
-    
-            var byteArray = Encoding.ASCII.GetBytes("john:" + password);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
-            //sends the data to the website 
-
-            HttpResponseMessage response;
-
-            //original post code
-            string filePathToZip = @"C:\\Users\\Victor\\Desktop\\ZipTest.zip";
-            byte[] fileData = File.ReadAllBytes(filePathToZip);
-
-            string test1 = Convert.ToBase64String(fileData);
-
-
-            //Console.WriteLine(Path.GetFullPath("CrackerTest\\Resources"));
-            Console.WriteLine(Convert.ToBase64String(fileData));
-            //File.WriteAllBytes("C:\\Users\\Victor\\Desktop\\PasswordCracker\\test.zip", fileData);
-            Console.ReadLine();
+                //sets the content of the response sent back form the website to a variable and then
+                //prints some of the data contained within
+                string result = responseMessage.Content.ReadAsStringAsync().Result;
+                Console.WriteLine("STATUS CODE: " + responseMessage.StatusCode);
+                Console.WriteLine("ReasonPhrase"+ responseMessage.ReasonPhrase);
+                Console.WriteLine("Contennt:\n"+ result);
+                Console.ReadLine();
+            }
+            //cathes any http errors and outputs them
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadLine();
+            }
+            //should any erros besides http errors occur this would just show output them to the console
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadLine();
+            }
         }
 
-
-
-        private async static void GetRequest()
+        private async static void TestPasswordCombinations()
         {
-            //this will be called in a looop untill the statuscode indicates success
+            //this will be called in a loop untill the statuscode indicates success
             //sets the url that the progarm will request data from
             string url = "http://recruitment.warpdevelopment.co.za/api/authenticate";
 
@@ -312,11 +288,9 @@ namespace CrackerTest
             HttpClient client = new HttpClient();
             //try and catch for any unexpected errors that might occur
 
-
             string fileDirectoryFind = Path.GetFullPath(@"C:\\Users\\Victor\\Desktop");
             string filename = "dict.txt";
             string filePath = Path.Combine(fileDirectoryFind, filename);
-            int statusCode = 0;
 
             StreamReader sr = new StreamReader(filePath);
             string currentPass;
@@ -337,30 +311,27 @@ namespace CrackerTest
 
                     if ((int)response.StatusCode == 200)
                     {
-                    Console.WriteLine("Status Code:" + (int)response.StatusCode);
-                    Console.WriteLine(currentPass);
-                    string postUrl = await content.ReadAsStringAsync();
-                    Console.WriteLine("RESPONSE: " + postUrl);
-                    break;
+                        Console.WriteLine("Status Code:" + (int)response.StatusCode);
+                        Console.WriteLine(currentPass);
+                        string postUrl = await content.ReadAsStringAsync();
+                        Console.WriteLine("RESPONSE: " + postUrl);
+                        PostZipFile(currentPass, postUrl);
+                        break;
                     }
                     Console.WriteLine("Status Code:" + (int)response.StatusCode);
                     Console.WriteLine(currentPass);
-                    //Console.WriteLine("Status Code:" + response.ReasonPhrase);
+                    //Console.WriteLine("Reason Phrase: " + response.ReasonPhrase);
 
                     //result of the response is set eaul to a varibale to be used as the programmer sees fit
                     string result = await content.ReadAsStringAsync();
-                    Console.WriteLine("RESPONSE: " +result);
+                    Console.WriteLine("RESPONSE: " + result);
 
-            }
+                }
                 catch (HttpRequestException e)
                 {
                     Console.WriteLine(e.Message);
                 }
             }
-
-            
-
-
         }
 
 
@@ -368,49 +339,41 @@ namespace CrackerTest
         /// <summary>
         /// all the previous methods I have tried and expermimented with in the state they were last looked at
         /// as well as the order I last worked on them.
-        /// I chose to move on to a method I knew would work as at least the project would be delivered at a 
+        /// I chose to move on to a method I knew would work as at least the project would be delivered in a 
         /// reasonalbe time in working condition rather than way over time or never completed
         /// </summary>
-
 
 
 
         /// <summary>
         /// too many possible combinations and thus would not work
         /// </summary>
-        private static void bruteForce()
+        private static void BruteForce()
         {
-                char[] characters = new char[] { 'p', 'a', 's', 'w', 'o', 'r', 'd', 'P', 'A', 'S', 'W', 'O', 'R', 'D', '@', '5', '0' };
-                foreach (char character in characters)
-                {
+            char[] characters = new char[] { 'p', 'a', 's', 'w', 'o', 'r', 'd', 'P', 'A', 'S', 'W', 'O', 'R', 'D', '@', '5', '0' };
+            foreach (char character in characters)
+            {
 
-                }
+            }
         }
 
-
-
         /// <summary>
-        /// This method was meant to
+        /// This method was meant to use jagged arrays solve a problem I ran into with the LastNewCrack method
+        /// but it has the same problem in a diffent way
         /// </summary>
 
-
-        //use a jagged array to loop through
-        //will have 3 diffrent possbile values
-        //0 password
-        //1 PASSWORD
-        //2 @50
-        private static void jaggedArrayCrack()
+        private static void JaggedArrayCrack()
         {
 
-        // First possible way of creating the needed jagged array
+            // First possible way of creating the needed jagged array
             /*char[][] password = new char[3][];
             password[0] = new char[] { 'p', 'a', 's', 's', 'w', 'o', 'r', 'd' };
             password[1] = new char[] { 'P', 'A', 'S', 'S', 'W', 'O', 'R', 'D' };
             password[2] = new char[] { '@', '5', '0' };*/
 
-        // second and possibly more easier to use array
-        // values are sorted into rows and columns each row has a the number of columns based on the amount of possible
-        // values the character in that rowposition could be
+            // second and possibly more easier to use array
+            // values are sorted into rows and columns each row has a the number of columns based on the amount of possible
+            // values the character in that rowposition could be
             char[][] password = new char[8][];
             password[0] = new char[] { 'p', 'P' };
             password[1] = new char[] { 'a', 'A', '@' };
@@ -487,10 +450,12 @@ namespace CrackerTest
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// the most efficent method of finding all the possible combinations of any password given to it given that you know what letters to replace symbols with
+        /// just was not feasible to complete in a small enough timewindow 
+        /// </summary>
 
-        // the most efficent method of finding the conclution just was not feasible to complete in a
-        // small enough time window
-        private static void retical()
+        private static void LastNewCrack()
         {
             string password = "password";
             StringBuilder lowerCase = new StringBuilder("password");//"password"
@@ -572,8 +537,8 @@ namespace CrackerTest
             Console.ReadLine();
         }
 
-        // how I originally thought of looping through the password would yeald all possible results
-        // is wrong as it doesn't consider values like pASsword since the first character can never be
+        //how I originally thought of looping through the password would yeald all possible results
+        //is wrong as it doesn't consider values like pASsword since the first character can never be
         //lowercase again using this logic
         /*
          *                                  <Example>
@@ -597,8 +562,11 @@ namespace CrackerTest
          *                                  pA5sword...
         */
 
-        //The earlier version of the retical method
-        private static void newCrack()
+        /// <summary>
+        /// The earlier version of the LastNewCrack method
+        /// </summary>
+
+        private static void NewCrack()
         {
             string password = "password";
             StringBuilder lowerCase = new StringBuilder();//"password"
@@ -665,9 +633,12 @@ namespace CrackerTest
             Console.ReadLine();
         }
 
-        // The first attempt at cracking the password that doesn't just consist of for loops but would dynamically change depending on
-        // the password entered by the user as well as the length special characters would only be considered if the user wants to 
-        // replace spesific characters with a certain character
+         /// <summary>
+         /// The first attempt at cracking the password that doesn't just consist of for loops but would dynamically change depending on
+         /// the password entered by the user as well as the length special characters would only be considered if the user wants to 
+         /// replace spesific characters with a certain character
+         /// </summary>
+
         private static void OriginalCrack()
         {
             string currentAdding;
@@ -686,7 +657,7 @@ namespace CrackerTest
                 currentAdding = topPrint[j].ToString().ToUpper();
                 topPrint[j] = Convert.ToChar(currentAdding);
 
-                Console.WriteLine(topPrint + " MMMMMMMMMMMMMMM");
+                Console.WriteLine(topPrint + "MMMMMMMMMMMMMMM");
                 //for experimental loop
                 if (printText.Length > 0)
                 {
@@ -714,22 +685,22 @@ namespace CrackerTest
 
                         //follows the same logic as previous loop
                         currentAdding = printText[uppercase].ToString().ToUpper();
-                    /*
-                    if (currentAdding == "A")
-                    {
-                        if (uppercase - 1 < 0)
+                        /*
+                        if (currentAdding == "A")
                         {
+                            if (uppercase - 1 < 0)
+                            {
 
-                        }
-                        else
-                        {
-                            currentAdding = "@";
-                            //uppercase--;
-                        }
-                        Console.WriteLine("AAAAAAAAAAAAAAAAAAAAA");
-                    }*/
+                            }
+                            else
+                            {
+                                currentAdding = "@";
+                                //uppercase--;
+                            }
+                            Console.WriteLine("AAAAAAAAAAAAAAAAAAAAA");
+                        }*/
 
-                    secondPrint[uppercase] = Convert.ToChar(currentAdding);
+                        secondPrint[uppercase] = Convert.ToChar(currentAdding);
 
                         Console.WriteLine(secondPrint + "  Second");
                         StringBuilder thirdPrint = new StringBuilder(secondPrint.ToString());
@@ -779,7 +750,7 @@ namespace CrackerTest
             Console.ReadLine();
         }
 
-        //unnamed version if making creating all the permutation of password
+        //unnamed version of making creating all the permutation of password was in the main method but is no longer used
         /*string currentAdding = "";
         string passwordText = "password";
         StringBuilder printText = new StringBuilder();
