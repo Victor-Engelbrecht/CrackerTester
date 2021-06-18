@@ -14,53 +14,38 @@ namespace CrackerTest
     //the object that will be serialised and sent to the url with the base64FileString being the zip file requested
     class JsonClass
     {
+        //had this as all my contact details but server didn't accept my code and gave a vauge error message
+        //only accetps the data if the jsonclass only has the Data value
         //name and contact details
-        public string name { get; set; } = "Victor Engelbrecht";
+        /*public string name { get; set; } = "Victor Engelbrecht";
         public string email { get; set; } = "engelbrechtvictor99@gmail.com";
         public string cell { get; set; } = "0624218299";
         //zip file containing all work;
-        public string base64FileString { get; set; }
+        public string base64FileString { get; set; */
+        public string Data { get; set; }
     }
 
     class Program
     {
         static void Main(string[] args)
         {
-
-            //used for the get request
-            test();
-            //TestPasswordCombinations();
-            //Console.ReadLine();
-
-
+            //4 main methods used to run the progarm 
+            //I did not think a menu to call them from console would be nessesary as the program is built for only one purpuose
             //FindPasswordLoopToEnd();
+            TestPasswordCombinations();
             //PostZipFile();
-
+            Console.ReadLine();
 
             //Previous methods I was thinking of using to find all the diffrent cobinations of password
             //They were not used for various reasons but I have left them in as a way to show my style of coding
             //as well as how I go about solving the problem presented to me
+            //FileTest()
             //BruteForce();
             //JaggedArrayCrack();
-            //OriginalCrack();
-            //NewCrack();
             //LastNewCrack();
-        }
+            //NewCrack();
+            //OriginalCrack();
 
-        private static void test()
-        {
-            string filePathToZip = @"C:\\Users\\Victor\\Desktop\\ZipTest.zip";
-            byte[] fileData = File.ReadAllBytes(filePathToZip);
-
-            string test1 = Convert.ToBase64String(fileData);
-
-
-            //Console.WriteLine(Path.GetFullPath("CrackerTest\\Resources"));
-            Console.WriteLine(Convert.ToBase64String(fileData));
-            byte[] chavonneTest = Convert.FromBase64String(test1);
-            File.WriteAllBytes(@"C:\\Users\\Victor\\Desktop\\Chavonne.zip",  chavonneTest);
-            //File.WriteAllBytes("C:\\Users\\Victor\\Desktop\\PasswordCracker\\test.zip", fileData);
-            Console.ReadLine();
         }
 
         //simplest way of finding the password 
@@ -223,7 +208,7 @@ namespace CrackerTest
         }
 
 
-
+        //string password
         private async static void PostZipFile(string password, string url)
         {
             //makes a json obejct and posts it to the url passed to it it using the password provided 
@@ -232,36 +217,44 @@ namespace CrackerTest
                 //using hardcoded strings becuase my of access errors on computer
                 //all filepaths can be changed to the desired outputs
                 //gets the file and coverts it into bytes
-                string filePathToZip = @"C:\\Users\\Victor\\Desktop\\ZipTest.zip";
+                string filePathToZip = @"C:\\Users\\Victor\\Desktop\\Victor_Engelbrecht_Application_Files.zip";
                 byte[] fileData = File.ReadAllBytes(filePathToZip);
                 //converts the file from bytes to a base65sting
                 string fileAsBase64String = Convert.ToBase64String(fileData);
 
                 //creats a new object to store the file and stores the file inside
-                JsonClass candidate = new JsonClass();
-                candidate.base64FileString = fileAsBase64String;
+                JsonClass candidate = new JsonClass
+                {
+                    Data = fileAsBase64String
+                };
 
                 //serialiseds the object
                 var json = JsonConvert.SerializeObject(candidate);
                 //sets the type of file the post will contain as well as it's encoding and what data it contains
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
-
+                
                 //creats a new client to send and recieve data
                 HttpClient client = new HttpClient();
 
                 //uses the password provided to the method and makes a new AuthenticationHeader to be able to be able to interact with the website
+                //chose to keep password here as well
+                //this header is not needed I just keep it in incase that was the case
                 var byteArray = Encoding.ASCII.GetBytes("john:" + password);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
                 //sends the data to the website
-                HttpResponseMessage responseMessage = await client.PostAsync(url, data);
-
+                var responseMessage = await client.PostAsync(url, data);
+                //var responseMessage = await client.PostAsync(url, data);
                 //sets the content of the response sent back form the website to a variable and then
                 //prints some of the data contained within
+
+                //used for debugging had an internal server error becuase the JSON sent to the server was not what it expected
                 string result = responseMessage.Content.ReadAsStringAsync().Result;
-                Console.WriteLine("STATUS CODE: " + responseMessage.StatusCode);
-                Console.WriteLine("ReasonPhrase"+ responseMessage.ReasonPhrase);
-                Console.WriteLine("Contennt:\n"+ result);
+                Console.WriteLine("STATUS CODE:\n " + responseMessage.StatusCode);
+                Console.WriteLine("ReasonPhrase:\n " + responseMessage.ReasonPhrase);
+                Console.WriteLine("Content:\n" + result);
+                Console.WriteLine("\n" + responseMessage.RequestMessage + "\n");
+                Console.WriteLine("\n" + responseMessage.Headers + "\n");
                 Console.ReadLine();
             }
             //cathes any http errors and outputs them
@@ -318,13 +311,15 @@ namespace CrackerTest
                         PostZipFile(currentPass, postUrl);
                         break;
                     }
+
+                    //Uncomment to see how the program tries to find the correct password 
                     Console.WriteLine("Status Code:" + (int)response.StatusCode);
-                    Console.WriteLine(currentPass);
+                    //Console.WriteLine(currentPass);
                     //Console.WriteLine("Reason Phrase: " + response.ReasonPhrase);
 
-                    //result of the response is set eaul to a varibale to be used as the programmer sees fit
-                    string result = await content.ReadAsStringAsync();
-                    Console.WriteLine("RESPONSE: " + result);
+                    //result of the response is set to a varibale to be used as the programmer sees fit
+                    //string result = await content.ReadAsStringAsync();
+                    //Console.WriteLine("RESPONSE: " + result);
 
                 }
                 catch (HttpRequestException e)
@@ -344,6 +339,22 @@ namespace CrackerTest
         /// </summary>
 
 
+
+        /// <summary>
+        /// used to lean how to conver files into bytes and then back again
+        /// </summary>
+        private static void FileTest()
+        {
+            string filePathToZip = @"C:\\Users\\Victor\\Desktop\\Victor_Engelbrecht_Application_Files.zip";
+            byte[] fileData = File.ReadAllBytes(filePathToZip);
+
+            string base64StringFileData = Convert.ToBase64String(fileData);
+
+            Console.WriteLine(Convert.ToBase64String(fileData));
+            byte[] serialTest = Convert.FromBase64String(base64StringFileData);
+            File.WriteAllBytes(@"C:\\Users\\Victor\\Desktop\\serialTest.zip", serialTest);
+            Console.ReadLine();
+        }
 
         /// <summary>
         /// too many possible combinations and thus would not work
@@ -633,11 +644,11 @@ namespace CrackerTest
             Console.ReadLine();
         }
 
-         /// <summary>
-         /// The first attempt at cracking the password that doesn't just consist of for loops but would dynamically change depending on
-         /// the password entered by the user as well as the length special characters would only be considered if the user wants to 
-         /// replace spesific characters with a certain character
-         /// </summary>
+        /// <summary>
+        /// The first attempt at cracking the password that doesn't just consist of for loops but would dynamically change depending on
+        /// the password entered by the user as well as the length special characters would only be considered if the user wants to 
+        /// replace spesific characters with a certain character
+        /// </summary>
 
         private static void OriginalCrack()
         {
